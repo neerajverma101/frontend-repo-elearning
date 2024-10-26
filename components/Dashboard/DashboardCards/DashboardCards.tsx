@@ -1,4 +1,5 @@
 'use client';
+import { useAppSelector } from '@/app/lib/hooks';
 import { MODULES_MAPPING } from '@/constant';
 import {
   Badge,
@@ -22,12 +23,15 @@ interface Module {
 }
 
 function DashboardCards({ data }: { data: Module }) {
+  const { userData } = useAppSelector(state => state.store)
   const router = useRouter()
 
   return (
     <Container size="sm" py="xl">
-      <Card shadow="md" radius="lg" className={classes.card} padding="lg" onClick={() => {
-        router.push(MODULES_MAPPING[data.value as keyof typeof MODULES_MAPPING])
+      <Card shadow="md" radius="lg" className={classes.card} style={{ cursor: userData?.userType !== "STUDENT" ? "pointer" : "default" }} padding="lg" onClick={() => {
+        if (userData?.userType !== "STUDENT") {
+          router.push(MODULES_MAPPING[data.value as keyof typeof MODULES_MAPPING])
+        }
       }}>
         <Card.Section>
           <Image
@@ -39,7 +43,7 @@ function DashboardCards({ data }: { data: Module }) {
           />
         </Card.Section>
 
-        <Flex  justify="space-between"  mt="md" mb="xs">
+        <Flex justify="space-between" mt="md" mb="xs">
           <Text fw={500} className={classes.cardTitle}>
             {data.moduleName}
           </Text>
@@ -48,7 +52,7 @@ function DashboardCards({ data }: { data: Module }) {
           </Badge>
         </Flex>
 
-        <Text className={classes.cardDesc}  size="sm" c="dimmed" mb="md">
+        <Text className={classes.cardDesc} size="sm" c="dimmed" mb="md">
           {data.description}
         </Text>
 

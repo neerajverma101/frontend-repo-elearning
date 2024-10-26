@@ -158,7 +158,7 @@ export const USER_TYPE = {
 }
 
 export const MODULES_MAPPING = {
-    teachers: { path: '/dashboard/teachers' },
+    teachers: '/dashboard/teachers',
     students: '/dashboard/students',
     classes: '/dashboard/classes',
     onlineClasses: '/dashboard/online-classes',

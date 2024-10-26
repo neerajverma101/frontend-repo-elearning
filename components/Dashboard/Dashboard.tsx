@@ -1,6 +1,6 @@
 "use client"
 import restClient from '@/app/api/restClient';
-import { useAppDispatch } from '@/app/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import withAuth from '@/app/lib/withAuth';
 import { APIS, MODULES_MAPPING } from '@/constant';
 import { Card, Grid, SimpleGrid, Text, useMatches } from '@mantine/core';
@@ -13,6 +13,7 @@ const Dashboard = () => {
     const dispatch = useAppDispatch()
     const [modules, setModules] = useState([])
     const [dashboardCounts, setDashboardCounts] = useState({})
+    const { userData } = useAppSelector(state => state.store)
 
     useEffect(() => {
         getModules()
@@ -61,7 +62,7 @@ const Dashboard = () => {
                         withBorder
                         onClick={() => {
                             const path = MODULES_MAPPING[key];
-                            if (path) {
+                            if (path && userData?.userType !== "STUDENT") {
                                 router.push(path);
                             }
                         }}
