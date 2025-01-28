@@ -1,37 +1,55 @@
-# eLearning Next.js template
+# 🌈 eLearning Platform - Project Overview 
 
-This is a template for [Next.js](https://nextjs.org/) app router + [eLearning](https://mantine.dev/).
-If you want to use pages router instead, see [next-pages-template](https://github.com/mantinedev/next-pages-template).
+This project aims to develop a comprehensive SaaS platform for educational organizations. The platform will streamline administrative tasks, enhance communication between stakeholders (educational organizations, teachers, parents, and students), and improve the overall learning experience.
 
-## Features
+**Key Features:**
 
-This template comes with the following features:
+* **User Management:** 
+    * User registration and authentication
+    * Role-based access control (RBAC)
+    * User profiles and management
+* **Core Modules:**
+    * **Educational Organization Onboarding:** 
+        * Registration, profile creation, module selection
+    * **Teacher Management:** 
+        * Teacher profiles, class assignments, schedule management
+    * **Student Management:** 
+        * Student enrollment, class assignments, attendance tracking
+    * **Parent/Guardian Management:** 
+        * Parent registration, student mapping, communication
+    * **Classroom Management:** 
+        * Live online classes, session recording, note transcription
+    * **Content Management:** 
+        * Upload and manage learning materials, assignments
+    * **Communication:** 
+        * Announcements, messaging
+* **AI Integration:**
+    * AI-powered chat assistant for student queries and homework help 🤖
+* **Other Features:**
+    * Fees collection
+    * Examination management
+    * Transport management
+    * Timetable management
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Jest](https://jestjs.io/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
+**Technologies:**
 
-## npm scripts
+* **Frontend:** Next.js, ChatGPT, Cloudinary
+* **Backend:** NestJS
+* **Real-time Collaboration:** 100ms
+* **Version Control:** Git
+* **Deployment:** Vercel, Render
 
-### Build and dev scripts
+**Project Goals:**
 
-- `dev` – start dev server
-- `build` – bundle application for production
-- `analyze` – analyzes application bundle with [@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
+* Improve operational efficiency for educational organizations. 📈
+* Enhance communication between all stakeholders. 💬
+* Provide a seamless and user-friendly experience. ✨
+* Improve student learning outcomes. 🎓
 
-### Testing scripts
+## eLearning Platform Links
 
-- `typecheck` – checks TypeScript types
-- `lint` – runs ESLint
-- `prettier:check` – checks files with Prettier
-- `jest` – runs jest tests
-- `jest:watch` – starts jest watch
-- `test` – runs `jest`, `prettier:check`, `lint` and `typecheck` scripts
-
-### Other scripts
-
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `prettier:write` – formats all files with Prettier
+* **eLearning Portal:** https://repo-elearning-dev.vercel.app
+* **eLearning REST API:** https://backend-repo-elearning.onrender.com/api
+* Username: admin@yopmail.com
+* Password: admin
+---
