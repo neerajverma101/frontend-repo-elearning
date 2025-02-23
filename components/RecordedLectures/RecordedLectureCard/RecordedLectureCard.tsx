@@ -1,8 +1,7 @@
 'use client';
 
-import { Badge, Button, Card, Group, Image, Loader, Text } from '@mantine/core';
+import { AspectRatio, Badge, Button, Card, Group, Image, Loader, Text } from '@mantine/core';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 interface RecordedLectureCardProps {
     data: {
@@ -27,8 +26,6 @@ interface RecordedLectureCardProps {
 }
 
 const RecordedLectureCard: React.FC<RecordedLectureCardProps> = ({ data, handleViewRecording, showNoRecordingFound = false, apiCallInProgress = false, cardKey, apiCallInProgressKey }) => {
-    const router = useRouter();
-
     // Format the date
     const formattedDate = new Date(data.scheduledDate).toLocaleDateString();
 
@@ -39,12 +36,14 @@ const RecordedLectureCard: React.FC<RecordedLectureCardProps> = ({ data, handleV
                     data.urlDetails?.url ?
                         <video src={data.urlDetails.url} controls height={"100%"} width={"100%"} autoPlay={false} controlsList="nodownload noremoteplayback" ></video>
                         :
-                        <Image
-                            src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-                            height={160}
-                            width={240}
-                            alt="Norway"
-                        />
+                        <AspectRatio ratio={16 / 9}>
+                            <Image
+                                src={data.thumbnail}
+                                height={160}
+                                width={240}
+                                alt={data.class?.className}
+                            />
+                        </AspectRatio>
                 }
             </Card.Section>
 

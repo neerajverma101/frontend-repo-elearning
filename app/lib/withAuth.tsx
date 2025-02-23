@@ -1,13 +1,16 @@
 'use client';
-import { Alert, Flex, Loader } from '@mantine/core';
+import { Alert, Center, Loader } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const WithAuth = (WrappedComponent) => {
   return (props) => {
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     let parsedToken;
+    const store = useSelector(state => state.store)
+
     useEffect(() => {
       const accessToken = localStorage.getItem('accessToken');
       parsedToken = accessToken ? JSON.parse(accessToken) : null;
@@ -28,9 +31,9 @@ const WithAuth = (WrappedComponent) => {
     }
 
     return (
-      <Flex w="100vw" h="90vh" align="center" justify="center">
-        <Loader size={90} />
-      </Flex>
+      <Center>
+        <Loader size="lg" type='dots' />
+      </Center>
     );
   };
 };

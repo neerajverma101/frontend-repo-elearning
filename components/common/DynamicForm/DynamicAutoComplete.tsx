@@ -83,6 +83,7 @@ const DynamicAutoComplete: React.FC<AutocompleteProps> = ({
             withinPortal={false}
             store={combobox}
         >
+            {console.log("value", value)}
             <Combobox.Target>
                 <TextInput
                     label={label}

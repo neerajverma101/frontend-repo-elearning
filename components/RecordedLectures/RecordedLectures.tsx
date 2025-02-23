@@ -57,7 +57,7 @@ const RecordedLectures = (props) => {
 
     return (
         <div>
-            Recorded Lectures
+            Recorded Classes
             {/* <div>
                 <h1>Video on Demand</h1>
                 <VODPlayerV2 url={"https://vod-in.100ms.live/66b2186633ce74ab9be938e8/66b2186633ce74ab9be938e9/66b71e309928c864eafbfcec/room-vod/20240817/66c048d24b92b6b97503e283/master.m3u8"} />

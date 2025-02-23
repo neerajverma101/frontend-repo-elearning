@@ -19,7 +19,7 @@ const AboutSection = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">Our Mission</h3>
             <p className="text-gray-600">
-            At <strong>{APP_NAME}</strong>, our mission is to empower educational organizations with a flexible, scalable, and user-friendly AI-driven platform. We streamline onboarding and allow institutions to tailor features to their needs. Our platform enhances the learning experience with AI-powered tools for summarizing recorded lectures, generating question papers, and providing a chat assistant to address students' queries about assignments and subjects. We are committed to making education more accessible and effective for educators and learners worldwide.
+              At <strong>{APP_NAME}</strong>, our mission is to empower educational organizations with a flexible, scalable, and user-friendly AI-driven platform. We streamline onboarding and allow institutions to tailor features to their needs. Our platform enhances the learning experience with AI-powered tools for summarizing recorded classes/lectures, generating question papers, and providing a chat assistant to address students' queries about assignments and subjects. We are committed to making education more accessible and effective for educators and learners worldwide.
             </p>
           </div>
 
@@ -39,7 +39,7 @@ const AboutSection = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">Our Values</h3>
             <p className="text-gray-600">
-            At <strong>{APP_NAME}</strong>, we are dedicated to advancing education through innovation and excellence. Our AI-powered platform empowers organizations to onboard seamlessly and utilize features tailored to their needs. We provide solutions for generating recorded lecture summaries, creating question papers, and offering a chat assistant for students to address basic queries on assignments and subjects, all designed to drive educational success and support the growth of learning communities worldwide.
+              At <strong>{APP_NAME}</strong>, we are dedicated to advancing education through innovation and excellence. Our AI-powered platform empowers organizations to onboard seamlessly and utilize features tailored to their needs. We provide solutions for generating recorded lecture summaries, creating question papers, and offering a chat assistant for students to address basic queries on assignments and subjects, all designed to drive educational success and support the growth of learning communities worldwide.
             </p>
           </div>
         </div>

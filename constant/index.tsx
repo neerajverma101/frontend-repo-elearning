@@ -45,7 +45,9 @@ export const APIS = {
     MODULE_MANAGEMENT_MODULES: '/api/module-management/modules',
     MODULE_MANAGEMENT_UNSUBSCRIBE: '/api/module-management/unsubscribe',
     MODULE_MANAGEMENT_SUBSCRIBE: '/api/module-management/subscribe',
-    DASHBOARD_COUNTS: '/api/dashboard/counts'
+    DASHBOARD_COUNTS: '/api/dashboard/counts',
+    DELETE_CLASS: '/api/class/:classId',
+    DELETE_ONLINE_CLASS_BY_ROOM_ID: '/api/onlineClass/:roomId',
 }
 
 export const SCHEMA_APIS = {

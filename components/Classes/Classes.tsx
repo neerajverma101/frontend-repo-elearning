@@ -1,10 +1,14 @@
 'use client';
 import restClient from "@/app/api/restClient";
+import { setAddClassModalState } from "@/app/lib/slice";
 import { APIS } from "@/constant";
 import { getRandomMantineColor } from "@/constant/utils";
-import { Avatar, Badge, Button, Card, Grid, Group, Paper, Text } from "@mantine/core";
+import { ActionIcon, Anchor, Avatar, Badge, Button, Card, Grid, Group, Paper, Text } from "@mantine/core";
+import { modals } from "@mantine/modals";
+import { IconPencil, IconTrash } from "@tabler/icons-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import TableWithSelection from '../TableWithSelection/TableWithSelection';
 
 interface Teacher {
@@ -33,6 +37,7 @@ const Classes = () => {
     const [selectedClass, setSelectedClass] = useState<ClassObject | null>(null);
     const router = useRouter();
     const { classId } = useParams();  // Get classId from the URL
+    const dispatch = useDispatch();
 
     useEffect(() => {
         getClasses();
@@ -52,7 +57,7 @@ const Classes = () => {
         }
     };
 
-    const colSpan = 2; // Adjust based on your grid requirements
+    const colSpan = { base: 12, md: 6, lg: 3 }; // Adjust based on your grid requirements
 
     const teacherColumns = [
         {
@@ -86,13 +91,30 @@ const Classes = () => {
         <div>
             {!classId ? (
                 <>
-                    <Text size="xl" fw={700} mb="md">Class List</Text>
+                    <div className="flex items-center mb-8">
+                        <Text size="xl" fw={700} >Class List</Text>
+                        <Anchor className="ml-4" onClick={() => dispatch(setAddClassModalState({ show: true, cb: getClasses() }))}>+Add Class</Anchor>
+                    </div>
                     <Grid>
                         {classes.map((classObj, classObjIndex) => (
                             <Grid.Col span={colSpan} key={classObj._id + "-" + classObjIndex}>
                                 <ClassCard
                                     data={classObj}
                                     handleViewDetails={() => router.push(`/dashboard/classes/${classObj._id}`)}
+                                    handleEditClass={() => dispatch(setAddClassModalState({ show: true, data: classObj }))}
+                                    handleDeleteClass={() => {
+                                        modals.openConfirmModal({
+                                            title: 'Delete Class',
+                                            children: (<Text size="sm">Are you sure you want to delete this class?</Text>),
+                                            labels: { confirm: 'Confirm', cancel: 'Cancel' },
+                                            onConfirm: () => {
+                                                restClient.delete(APIS.DELETE_CLASS.replace(':classId', classObj._id)).then(() => {
+                                                    getClasses();
+                                                });
+                                            },
+                                        })
+
+                                    }}
                                 />
                             </Grid.Col>
                         ))}
@@ -153,10 +175,20 @@ interface ClassCardProps {
     handleViewDetails: (data: ClassObject) => void;
 }
 
-function ClassCard({ data, handleViewDetails }: ClassCardProps) {
+function ClassCard({ data, handleViewDetails, handleEditClass, handleDeleteClass }: ClassCardProps) {
     return (
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
-            <Text fw={500}>{data.className}</Text>
+        <Card shadow="sm" padding="lg" radius="md" withBorder >
+            <Group justify="space-between">
+                <Text fw={500}>{data.className}</Text>
+                <Group>
+                    <ActionIcon variant='white' size={'xs'} onClick={() => handleEditClass(data)}>
+                        <IconPencil />
+                    </ActionIcon>
+                    <ActionIcon variant='white' size={'xs'} onClick={() => handleDeleteClass(data._id)}>
+                        <IconTrash />
+                    </ActionIcon>
+                </Group>
+            </Group>
             <Badge color="blue" variant="light">
                 {data.teachers.length} Teachers
             </Badge>

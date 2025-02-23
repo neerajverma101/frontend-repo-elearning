@@ -3,7 +3,7 @@ import restClient from '@/app/api/restClient';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import withAuth from '@/app/lib/withAuth';
 import { APIS, MODULES_MAPPING } from '@/constant';
-import { Card, Grid, SimpleGrid, Text, useMatches } from '@mantine/core';
+import { Card, Container, Grid, SimpleGrid, Text, Title, useMatches } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import DashboardCards from './DashboardCards/DashboardCards';
@@ -38,41 +38,44 @@ const Dashboard = () => {
 
     return (
         <div>
-            <h3>Modules</h3>
-            <Grid>
-                {modules.map((module: any) => (
-                    <Grid.Col span={cardStyle} key={module.id}>
-                        <DashboardCards data={module}></DashboardCards>
-                    </Grid.Col>
-                ))}
-            </Grid>
-
-            <h3>Counts</h3>
-            <SimpleGrid cols={5} spacing="lg" breakpoints={[
-                { maxWidth: 'md', cols: 3, spacing: 'md' },
-                { maxWidth: 'sm', cols: 2, spacing: 'sm' },
-                { maxWidth: 'xs', cols: 1, spacing: 'sm' },
-            ]}>
-                {dashboardCounts && Object.entries(dashboardCounts).map(([key, value]: [string, any]) => (
-                    <Card
-                        key={key}
-                        shadow="sm"
-                        padding="lg"
-                        radius="md"
-                        withBorder
-                        onClick={() => {
-                            const path = MODULES_MAPPING[key];
-                            if (path && userData?.userType !== "STUDENT") {
-                                router.push(path);
-                            }
-                        }}
-                        style={{ cursor: 'pointer' }}
-                    >
-                        <Text size="xl" fw={500}>{value.label}</Text>
-                        <Text size="lg" mt="md">{value.count}</Text>
-                    </Card>
-                ))}
-            </SimpleGrid>
+            <Container fluid className='border border-gray-300 border-opacity-30 rounded-md p-4'>
+                <Title order={3}>Modules</Title>
+                <Grid>
+                    {modules.map((module: any) => (
+                        <Grid.Col span={cardStyle} key={module.id}>
+                            <DashboardCards data={module}></DashboardCards>
+                        </Grid.Col>
+                    ))}
+                </Grid>
+            </Container>
+            <Container fluid className='border border-gray-300 border-opacity-30 rounded-md mt-4'>
+                <Title order={3}>Counts</Title>
+                <SimpleGrid cols={5} spacing="lg" breakpoints={[
+                    { maxWidth: 'md', cols: 3, spacing: 'md' },
+                    { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+                    { maxWidth: 'xs', cols: 1, spacing: 'sm' },
+                ]}>
+                    {dashboardCounts && Object.entries(dashboardCounts).map(([key, value]: [string, any]) => (
+                        <Card
+                            key={key}
+                            shadow="sm"
+                            padding="lg"
+                            radius="md"
+                            withBorder
+                            onClick={() => {
+                                const path = MODULES_MAPPING[key];
+                                if (path && userData?.userType !== "STUDENT") {
+                                    router.push(path);
+                                }
+                            }}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <Text size="xl" fw={500}>{value.label}</Text>
+                            <Text size="lg" mt="md">{value.count}</Text>
+                        </Card>
+                    ))}
+                </SimpleGrid>
+            </Container>
         </div>
     );
 };

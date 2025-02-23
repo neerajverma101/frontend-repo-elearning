@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { setUserData } from '@/app/lib/slice';
 import { APIS, ROUTES } from '@/constant';
 import { HMSRoomProvider } from '@100mslive/react-sdk';
-import { AppShell, Avatar, Burger, Flex, Group, Menu, rem } from '@mantine/core';
+import { AppShell, Avatar, Burger, Container, Flex, Group, LoadingOverlay, Menu, rem } from '@mantine/core';
 import { useDisclosure, useLocalStorage } from '@mantine/hooks';
 import { IconSettings, IconUser } from '@tabler/icons-react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -12,7 +12,6 @@ import React, { useEffect } from 'react';
 import AddClassForm from '../AddClassForm/AddClassForm';
 import AddStudentForm from '../AddStudentForm/AddStudentForm';
 import AddTeacherForm from '../AddTeacherForm/AddTeacherForm';
-import AppLoader from '../AppLoader/AppLoader';
 import AppLogo from '../AppLogo/AppLogo';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { FooterMenu } from '../FooterMenu/FooterMenu';
@@ -23,6 +22,7 @@ import Navbar from '../Navbar/Navbar';
 import AddParentForm from '../Parents/AddParentForm/AddParentForm';
 import ScheduleOnlineClass from '../ScheduleOnlineClass/ScheduleOnlineClassModal';
 import AssignToClass from '../common/DynamicForm/AssignToClass/AssignToClass';
+import BackLink from '../ui/BackLink';
 
 
 export function AppShellLayout({ children }: { children: React.ReactNode }) {
@@ -35,6 +35,7 @@ export function AppShellLayout({ children }: { children: React.ReactNode }) {
     const dispatch = useAppDispatch()
 
     const isDashboard = pathname.includes("/dashboard");
+    const showBack = !(pathname === '/' || pathname === '/dashboard')
 
     useEffect(() => {
         toggleMobile()
@@ -63,7 +64,7 @@ export function AppShellLayout({ children }: { children: React.ReactNode }) {
                 <Group h="100%" px="md">
                     <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
                     <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
-                    <AppLogo path={isDashboard? '/dashboard' : ''} />
+                    <AppLogo path={isDashboard ? '/dashboard' : ''} />
                 </Group>
                 <Group px="md">
                     {store.userData?.username ?
@@ -110,6 +111,9 @@ export function AppShellLayout({ children }: { children: React.ReactNode }) {
                         paddingLeft: isDashboard && desktopOpened ? 260 : 24,
                     }}
                 >
+                    <Container fluid>
+                        {showBack && <BackLink />}
+                    </Container>
                     {children}
                 </AppShell.Main>
                 <AppShell.Footer >
@@ -121,9 +125,10 @@ export function AppShellLayout({ children }: { children: React.ReactNode }) {
                 {store.addStudentModalState.show ? <AddStudentForm></AddStudentForm> : null}
                 {store.addClassModalState.show ? <AddClassForm></AddClassForm> : null}
                 {store.confirmationModal.isOpen ? <ConfirmationModal></ConfirmationModal> : null}
-                {store.isLoading && <AppLoader></AppLoader>}
+                {/* {store.isLoading && <AppLoader />} */}
                 {store.addParentModalState.show ? <AddParentForm></AddParentForm> : null}
                 {store.assignToClassModalState.show ? <AssignToClass></AssignToClass> : null}
+                <LoadingOverlay visible={store.isLoading} loaderProps={{ children: 'Loading...' }} />
             </AppShell> : <LandingPage>{store.loginModalState.show && <LoginFormModal></LoginFormModal>}</LandingPage>}
         </HMSRoomProvider>
     );

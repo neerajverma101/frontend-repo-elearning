@@ -4,6 +4,7 @@ import { DynamicThemeProvider } from '@/components/DynamicTheme/DynamicTheme';
 import { ColorSchemeScript } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
+import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
 import { QueryClient } from '@tanstack/react-query';
@@ -34,8 +35,10 @@ export default function RootLayout({ children }: { children: any }) {
         <DynamicThemeProvider>
           <StoreProvider>
             <ClientQueryProvider >
-              <AppShellLayout>{children}</AppShellLayout>
-              {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+              <ModalsProvider>
+                <AppShellLayout>{children}</AppShellLayout>
+                {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+              </ModalsProvider>
             </ClientQueryProvider>
           </StoreProvider>
           <Notifications />

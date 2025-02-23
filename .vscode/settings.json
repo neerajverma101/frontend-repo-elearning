@@ -2,5 +2,12 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": "always",
         "source.fixAll.eslint": "always"
-    }
+    },
+    "cssVariables.lookupFiles": [
+          "**/*.css",
+          "**/*.scss",
+          "**/*.sass",
+          "**/*.less",
+          "node_modules/@mantine/core/styles.css"
+        ]
 }

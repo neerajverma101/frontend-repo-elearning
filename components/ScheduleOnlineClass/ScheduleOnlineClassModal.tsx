@@ -1,13 +1,10 @@
 'use client';
-import hms from '@/app/api/hms';
 import restClient from '@/app/api/restClient';
-import { getOnlineClassesAction } from '@/app/dashboard/online-classes/page';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
-import { hideLoader, resetActiveLiveClassFormData, setLiveClassFormData, setScheduleOnlineClassModalState, showLoader } from '@/app/lib/slice';
+import { hideLoader, setScheduleOnlineClassModalState, showLoader } from '@/app/lib/slice';
 import { APIS, SCHEMA_APIS } from '@/constant';
-import { isNotEmptyObject } from '@/constant/utils';
+import { getThumbnail } from '@/constant/utils';
 import { Button, Divider, Group, Modal, Paper, Stack, Text } from '@mantine/core';
-import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import isObject from "lodash/isObject";
 import mapValues from "lodash/mapValues";
@@ -17,35 +14,8 @@ import DynamicForm from '../common/DynamicForm/DynamicForm';
 const ScheduleOnlineClass = () => {
     const store = useAppSelector(state => state.store)
     const dispatch = useAppDispatch()
-    const initialValues = isNotEmptyObject(store.activeEditLiveClassData) ? store.activeEditLiveClassData : {
-        name: "React Demo class",
-        subject: "React",
-        liveClassDescription: '',
-        dateTime: ''
-    }
-
-    const scheduleLiveClassForm = useForm({
-        initialValues: initialValues
-    })
-
     const close = () => {
-        dispatch(setScheduleOnlineClassModalState({ show: false, onlineClassData: null, callbackFunctionName: null }))
-        dispatch(resetActiveLiveClassFormData())
-    }
-
-    const handleScheduleLiveClassFormSubmit = async (values: { name: string, liveClassDescription: string, id: string }) => {
-        console.log(values)
-        const { name = '', liveClassDescription = '', id = '' } = values
-        const { data: newRoomData } = await hms.post(APIS.ROOMS, {
-            name: name,
-            description: liveClassDescription || "This is a sample description for the room",
-            template_id: "66b71e309928c864eafbfcec",
-            id: id
-        })
-        dispatch(setLiveClassFormData({ id: newRoomData.id, data: values }))
-        dispatch(setScheduleOnlineClassModalState({ show: false }))
-        dispatch(resetActiveLiveClassFormData())
-        getOnlineClassesAction()
+        dispatch(setScheduleOnlineClassModalState({ show: false, data: null, cb: null }))
     }
 
     const [onlineClassSchema, setOnlineClassSchema] = useState([])
@@ -74,6 +44,8 @@ const ScheduleOnlineClass = () => {
             }
             return value;
         });
+
+        payload.thumbnail = await getThumbnail(values.classId.className + " " + values.title)
 
         try {
             const apiUrl = APIS.CREATE_ONLINE_CLASS
@@ -106,13 +78,13 @@ const ScheduleOnlineClass = () => {
                                     <>
                                         <Group justify="space-between" mt="md">
                                             <Button type="submit" radius="xl">
-                                                {store.scheduleOnlineClassModalState.onlineClassData ? "Update Online Class" : "Add Online Class"}
+                                                {store.scheduleOnlineClassModalState.onlineClassData ? "Edit" : "Add"}
                                             </Button>
                                         </Group>
                                     </>
                                 }
-                            // formValues={store.scheduleOnlineClassModalState.onlineClassData || {}}
-                            // isEdit={Boolean(store.scheduleOnlineClassModalState.onlineClassData)}
+                            // formValues={store.scheduleOnlineClassModalState.data}
+                            // isEdit={store.scheduleOnlineClassModalState.data ? true : false}
                             />
                         </>
                     </Stack>

@@ -5,11 +5,10 @@ const initialState = {
     roomsData: [],
     liveClassFormData: {},
     roomsCodeData: {},
-    scheduleOnlineClassModalState: { show: false, onlineClassData: null },
-    activeEditLiveClassData: {},
+    scheduleOnlineClassModalState: { show: false, data: null },
     addStudentModalState: { show: false, studentData: null, isEdit: false, makeRequest: null },
     addTeacherModalState: { show: false, teacherData: null },
-    addClassModalState: { show: false },
+    addClassModalState: { show: false, data: null },
     addParentModalState: { show: false },
     userData: {},
     notificationBarState: { show: false, title: 'success', description: '', isError: null },
@@ -47,12 +46,6 @@ const storeSlice = createSlice({
         },
         resetLiveClassFormData(state) {
             state.liveClassFormData = {}
-        },
-        // setActiveLiveClassFormData(state, action) {
-        //     state.activeEditLiveClassData = action.payload
-        // },
-        resetActiveLiveClassFormData(state) {
-            state.activeEditLiveClassData = {}
         },
         setAddStudentModalState(state, action) {
             state.addStudentModalState = { ...state.addStudentModalState, ...action.payload }

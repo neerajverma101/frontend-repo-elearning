@@ -2,6 +2,7 @@
 import { useAppSelector } from '@/app/lib/hooks';
 import { MODULES_MAPPING } from '@/constant';
 import {
+  AspectRatio,
   Badge,
   Card,
   Container,
@@ -34,13 +35,15 @@ function DashboardCards({ data }: { data: Module }) {
         }
       }}>
         <Card.Section>
-          <Image
-            src={data.image}
-            height={160}
-            alt={data.moduleName}
-            withPlaceholder
-            placeholder={<Text align="center">No image available</Text>}
-          />
+          <AspectRatio ratio={1}>
+            <Image
+              src={data.image}
+              height={160}
+              alt={data.moduleName}
+              withPlaceholder
+              placeholder={<Text align="center">No image available</Text>}
+            />
+          </AspectRatio>
         </Card.Section>
 
         <Flex justify="space-between" mt="md" mb="xs">

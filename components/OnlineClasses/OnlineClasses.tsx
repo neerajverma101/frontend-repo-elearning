@@ -1,11 +1,13 @@
 "use client"
 import { getOnlineClassesApi } from '@/app/api/common';
-import { getOnlineClassesAction, getRoomCodeByRoomIdAction, updateLiveClassByIdAction } from '@/app/dashboard/online-classes/page';
+import restClient from '@/app/api/restClient';
+import { getRoomCodeByRoomIdAction } from '@/app/dashboard/online-classes/page';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { setRoomsCodeData, setScheduleOnlineClassModalState } from '@/app/lib/slice';
 import withAuth from '@/app/lib/withAuth';
 import { APIS } from '@/constant';
 import { Button, Grid, Group, useMatches } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { useEffect, useState } from 'react';
 import { ScheduledClassCard } from '../OnlineClassCard/OnlineClassCard';
 
@@ -56,14 +58,18 @@ const OnlineClasses = ({ rooms = { data: [] } }) => {
         }
     }
 
-    const handleDeleteLiveClass = async (roomId = '') => {
-        updateLiveClassByIdAction(roomId, { enabled: false })
-        const response = await getOnlineClassesAction()
-        setRoomsData(response)
+    const handleDeleteLiveClass = (roomId = '') => {
+        restClient.delete(APIS.DELETE_ONLINE_CLASS_BY_ROOM_ID.replace(":roomId", roomId)).then(() => {
+            getOnlineClasses()
+            notifications.show({ title: 'Success', message: 'Online class deleted successfully', color: 'green' })
+        }).catch(err => {
+            console.log(err)
+            notifications.show({ title: 'Error', message: 'Error deleting online class', color: 'red' })
+        })
     }
 
     const handleEditLiveClass = (data: {}) => {
-        dispatch(setScheduleOnlineClassModalState({ show: true, onlineClassData: data, }))
+        dispatch(setScheduleOnlineClassModalState({ show: true, data, cb: getOnlineClasses() }))
     }
 
     return (

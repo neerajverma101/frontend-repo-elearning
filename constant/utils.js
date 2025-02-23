@@ -40,10 +40,10 @@ export const flattenObject = (values = {}) => {
         return value;
     })
     Object.keys(flattedObj).forEach((key) => {
-       if(getFormIDConstants[key]){
-        flattedObj[getFormIDConstants[key]] = flattedObj[key];
-        delete flattedObj[key];
-       }
+        if (getFormIDConstants[key]) {
+            flattedObj[getFormIDConstants[key]] = flattedObj[key];
+            delete flattedObj[key];
+        }
     })
     return flattedObj;
 }
@@ -68,3 +68,10 @@ export const cleanChatData = (chatData) => {
 }
 
 
+export const getThumbnail = (keyword) => {
+    return fetch(`https://api.unsplash.com/photos/random?query=${keyword}&client_id=${process.env.NEXT_PUBLIC_THUMBNAIL_API_KEY}`)
+        .then(response => response.json())
+        .then(data => {
+            return data.urls?.thumb
+        });
+}

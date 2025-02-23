@@ -62,9 +62,10 @@ export function ScheduledClassCard(props: ScheduledClassCardPropsType) {
 
     const isClassActive = () => {
         const now = dayjs();
-        const classDate = dayjs(data.scheduledDate).format('YYYY-MM-DD');
-        const startDateTime = dayjs(`${classDate}T${data.startTime}`);
-        const endDateTime = dayjs(`${classDate}T${data.endTime}`);
+        const { scheduledDate, startTime, endTime } = data
+        const classDate = dayjs(scheduledDate).format('YYYY-MM-DD');
+        const startDateTime = dayjs(`${classDate}T${startTime}`, 'YYYY-MM-DDTHH:mm');
+        const endDateTime = dayjs(`${classDate}T${endTime}`, 'YYYY-MM-DDTHH:mm');
 
         return now.isAfter(startDateTime) && now.isBefore(endDateTime);
     };
@@ -96,7 +97,7 @@ export function ScheduledClassCard(props: ScheduledClassCardPropsType) {
                         Class: {data.class.className}
                     </Text>
                     <Text className={classes.label} c="dimmed">
-                        Teacher: {`${data.teacher.firstName} ${data.teacher.lastName}`}
+                        Teacher: {`${data.teacher?.firstName || ''} ${data.teacher?.lastName || ''}`}
                     </Text>
                     <Group spacing="xs">
                         <IconClock size={14} />
